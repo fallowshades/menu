@@ -1,0 +1,257 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap";
+:root {
+  --clr-primary-1: #063251;
+  --clr-primary-2: #104e7a;
+  --clr-primary-3: #1a6aa2;
+  --clr-primary-4: #2d87c8;
+  --clr-primary-5: #49a6e9;
+  --clr-primary-6: #6ebef7;
+  --clr-primary-7: #8bcbf9;
+  --clr-primary-8: #a5d5f8;
+  --clr-primary-9: #c5e5fc;
+  --clr-primary-10: #ebf7ff;
+  --clr-grey-1: #102a42;
+  --clr-grey-2: #243a52;
+  --clr-grey-3: #324d67;
+  --clr-grey-4: #48647f;
+  --clr-grey-5: #617d98;
+  --clr-grey-6: #829ab0;
+  --clr-grey-7: #9eb2c7;
+  --clr-grey-8: #bcccdc;
+  --clr-grey-9: #dae2ec;
+  --clr-grey-10: #f1f5f8;
+  --clr-white: #fff;
+  --clr-red-dark: #bb2525;
+  --clr-red-light: #e66b6b;
+  --clr-green-dark: #25bb32;
+  --clr-green-light: #6be675;
+  --clr-gold: #c59d5f;
+  --clr-black: #222;
+  --ff-primary: "Roboto", sans-serif;
+  --ff-secondary: "Open Sans", sans-serif;
+  --transition: all .3s linear;
+  --spacing: .25rem;
+  --radius: .5rem;
+  --light-shadow: 0 5px 15px #0000001a;
+  --dark-shadow: 0 5px 15px #0003;
+  --max-width: 1170px;
+  --fixed-width: 620px;
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--ff-secondary);
+  background: var(--clr-grey-10);
+  color: var(--clr-grey-1);
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img:not(.logo) {
+  width: 100%;
+}
+
+img {
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: var(--spacing);
+  text-transform: capitalize;
+  line-height: 1.25;
+  font-family: var(--ff-primary);
+  margin-bottom: .75rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: .875rem;
+}
+
+p {
+  color: var(--clr-grey-5);
+  margin-bottom: 1.25rem;
+}
+
+@media screen and (width >= 800px) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4, body {
+    font-size: 1rem;
+  }
+
+  h1, h2, h3, h4 {
+    line-height: 1;
+  }
+}
+
+.btn {
+  text-transform: uppercase;
+  color: var(--clr-black);
+  letter-spacing: var(--spacing);
+  transition: var(--transition);
+  border: 2px solid var(--clr-black);
+  cursor: pointer;
+  border-radius: var(--radius);
+  background: none;
+  padding: .375rem .75rem;
+  font-size: .875rem;
+  display: inline-block;
+  box-shadow: 0 1px 3px #0003;
+}
+
+.btn:hover {
+  color: var(--clr-white);
+  background: var(--clr-black);
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+main {
+  place-items: center;
+  min-height: 100vh;
+  display: grid;
+}
+
+.menu {
+  padding: 5rem 0;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.underline {
+  background: var(--clr-gold);
+  width: 5rem;
+  height: .25rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-container {
+  justify-content: center;
+  margin-bottom: 4rem;
+  display: flex;
+}
+
+.filter-btn {
+  border-color: var(--clr-gold);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  border-radius: var(--radius);
+  color: var(--clr-gold);
+  cursor: pointer;
+  transition: var(--transition);
+  background: none;
+  margin: 0 .5rem;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+}
+
+.filter-btn:hover {
+  background: var(--clr-gold);
+  color: var(--clr-white);
+}
+
+.section-center {
+  justify-items: center;
+  gap: 3rem 2rem;
+  width: 90vw;
+  max-width: 1170px;
+  margin: 0 auto;
+  display: grid;
+}
+
+.menu-item {
+  gap: 1rem 2rem;
+  max-width: 25rem;
+  display: grid;
+}
+
+.photo {
+  object-fit: cover;
+  border: .25rem solid var(--clr-gold);
+  border-radius: var(--radius);
+  height: 200px;
+}
+
+.item-info header {
+  border-bottom: .5px dotted var(--clr-grey-5);
+  justify-content: space-between;
+  display: flex;
+}
+
+.item-info h4 {
+  margin-bottom: .5rem;
+}
+
+.price {
+  color: var(--clr-gold);
+}
+
+.item-text {
+  margin-bottom: 0;
+  padding-top: 1rem;
+}
+
+@media screen and (width >= 768px) {
+  .menu-item {
+    grid-template-columns: 225px 1fr;
+    gap: 0 1.25rem;
+    max-width: 40rem;
+  }
+
+  .photo {
+    height: 175px;
+  }
+}
+
+@media screen and (width >= 1200px) {
+  .section-center {
+    grid-template-columns: 1fr 1fr;
+    width: 95vw;
+  }
+
+  .photo {
+    height: 150px;
+  }
+}
+/*# sourceMappingURL=index.1303bb05.css.map */
