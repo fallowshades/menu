@@ -591,7 +591,22 @@ var _dataDefault = parcelHelpers.interopDefault(_data);
 const sectionCenter = document.querySelector(".section-center");
 const btnContainer = document.querySelector(".btn-container");
 // display all items when page loads
+const loader = async ()=>{
+    try {
+        const settings = undefined;
+        const response = await fetch("http://localhost:1234/menu", settings);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const menu = await response.json() // Parse the response as JSON
+        ;
+        return menu;
+    } catch (error) {
+        console.error("Error fetching menu:", error) // Handle any errors
+        ;
+    }
+};
 window.addEventListener("DOMContentLoaded", function() {
+    const menuNew = loader();
+    console.log(menuNew);
     diplayMenuItems((0, _dataDefault.default));
     displayMenuButtons();
 });
@@ -612,13 +627,15 @@ function diplayMenuItems(menuItems) {
           </div>
         </article>`;
     });
-    displayMenu = displayMenu.join("");
+    displayMenu = displayMenu.join("") //is a string here
+    ;
     // console.log(displayMenu);
     sectionCenter.innerHTML = displayMenu;
 }
 function displayMenuButtons() {
     const categories = (0, _dataDefault.default).reduce(function(values, item) {
-        if (!values.includes(item.category)) values.push(item.category);
+        if (!values.includes(item.category)) //lib: es2016
+        values.push(item.category);
         return values;
     }, [
         "all"

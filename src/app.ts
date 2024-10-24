@@ -3,7 +3,27 @@ import menu from './data'
 const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
 // display all items when page loads
+
+const loader = async () => {
+  try {
+    const settings = undefined
+    const response = await fetch('http://localhost:1234/menu', settings)
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const menu: Response = await response.json() // Parse the response as JSON
+
+    return menu
+  } catch (error) {
+    console.error('Error fetching menu:', error) // Handle any errors
+  }
+}
+
 window.addEventListener('DOMContentLoaded', function () {
+  const menuNew = loader()
+  console.log(menuNew)
   diplayMenuItems(menu)
   displayMenuButtons()
 })
@@ -17,8 +37,8 @@ export interface MenuItem {
   desc: string
 }
 
-function diplayMenuItems(menuItems: MenuItem) {
-  let displayMenu = menuItems.map(function (item) {
+function diplayMenuItems(menuItems: MenuItem[]) {
+  let displayMenu: string[] | string = menuItems.map(function (item) {
     // console.log(item);
 
     return `<article class="menu-item">
@@ -35,15 +55,16 @@ function diplayMenuItems(menuItems: MenuItem) {
           </div>
         </article>`
   })
-  displayMenu = displayMenu.join('')
+  displayMenu = displayMenu.join('') //is a string here
   // console.log(displayMenu);
 
-  sectionCenter!.innerHTML = displayMenu
+  sectionCenter.innerHTML = displayMenu
 }
 function displayMenuButtons() {
   const categories = menu.reduce<string[]>(
     function (values, item: MenuItem) {
       if (!values.includes(item.category)) {
+        //lib: es2016
         values.push(item.category)
       }
       return values
@@ -65,7 +86,7 @@ function displayMenuButtons() {
   filterBtns.forEach(function (btn) {
     btn.addEventListener('click', function (e) {
       // console.log(e.currentTarget.dataset);
-      const category = e.currentTarget.dataset.id
+      const category = (e.currentTarget as HTMLElement).dataset.id
       const menuCategory = menu.filter(function (menuItem) {
         // console.log(menuItem.category);
         if (menuItem.category === category) {
