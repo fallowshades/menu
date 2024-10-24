@@ -4,29 +4,53 @@ const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
 // display all items when page loads
 
-const loader = async () => {
+const loader = async (): Promise<MenuItems[]> => {
+  const type = 'pizza'
+  const API_URL = 'http://localhost:3000/api/menu'
+  const API_KEY = 'fallow'
   try {
-    const settings = undefined
-    const response = await fetch('http://localhost:1234/menu', settings)
-
+    console.log(`Fetching menu from ${API_URL}?type=${type}`)
+    console.log(`Fetching menu from ${API_URL}?type=${type}`)
+    const response = await fetch(`${API_URL}?type=${type}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-zocom': API_KEY,
+      },
+    })
+    // Check if the response is okay
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const menu: Response = await response.json() // Parse the response as JSON
-
-    return menu
+    // Parse the response as JSON
+    const menu: MenuItems[] = await response.json()
+    return menu // Return the parsed menu
   } catch (error) {
     console.error('Error fetching menu:', error) // Handle any errors
+    return [] // Return an empty array to fulfill the return type requirement
   }
 }
 
-window.addEventListener('DOMContentLoaded', function () {
-  const menuNew = loader()
+window.addEventListener('DOMContentLoaded', async function () {
+  const menuNew = await loader()
+
   console.log(menuNew)
   diplayMenuItems(menu)
   displayMenuButtons()
 })
+
+interface MenuItems {
+  // Define the structure of MenuItem as per your API
+  id: number
+  type: string
+  name: string
+  imgUrl: string
+  description: string
+  price: number
+  toppings?: string[] // Optional property
+}
 
 export interface MenuItem {
   id: number

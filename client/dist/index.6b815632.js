@@ -592,20 +592,35 @@ const sectionCenter = document.querySelector(".section-center");
 const btnContainer = document.querySelector(".btn-container");
 // display all items when page loads
 const loader = async ()=>{
+    const type = "pizza";
+    const API_URL = "http://localhost:3000/api/menu";
+    const API_KEY = "fallow";
     try {
-        const settings = undefined;
-        const response = await fetch("http://localhost:1234/menu", settings);
+        console.log(`Fetching menu from ${API_URL}?type=${type}`);
+        console.log(`Fetching menu from ${API_URL}?type=${type}`);
+        const response = await fetch(`${API_URL}?type=${type}`, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "x-zocom": API_KEY
+            }
+        });
+        // Check if the response is okay
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const menu = await response.json() // Parse the response as JSON
+        // Parse the response as JSON
+        const menu = await response.json();
+        return menu // Return the parsed menu
         ;
-        return menu;
     } catch (error) {
         console.error("Error fetching menu:", error) // Handle any errors
         ;
+        return [] // Return an empty array to fulfill the return type requirement
+        ;
     }
 };
-window.addEventListener("DOMContentLoaded", function() {
-    const menuNew = loader();
+window.addEventListener("DOMContentLoaded", async function() {
+    const menuNew = await loader();
     console.log(menuNew);
     diplayMenuItems((0, _dataDefault.default));
     displayMenuButtons();

@@ -148,3 +148,83 @@ tsConfig.json
   "exclude": ["node_modules", "dist"]
 }
 ```
+
+#### get cors error
+
+app.ts
+
+- connection refused
+
+```ts
+const loader = async (): Promise<MenuItems[]> => {
+  const type = 'pizza'
+  const API_URL = 'http://localhost:3000/api/menu'
+  const API_KEY = 'fallow'
+  try {
+    console.log(`Fetching menu from ${API_URL}?type=${type}`)
+    console.log(`Fetching menu from ${API_URL}?type=${type}`)
+    const response = await fetch(`${API_URL}?type=${type}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'x-zocom': API_KEY,
+      },
+    })
+    // Check if the response is okay
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    // Parse the response as JSON
+    const menu: MenuItems[] = await response.json()
+    return menu // Return the parsed menu
+  } catch (error) {
+    console.error('Error fetching menu:', error) // Handle any errors
+    return [] // Return an empty array to fulfill the return type requirement
+  }
+}
+```
+
+- create package.json
+
+```sh
+npm init -y
+npm install
+npm run dev
+```
+
+package.json
+
+- not "type": "module",
+
+````json
+{
+  "name": "erik-filmon",
+  "version": "1.0.0",
+  "description": "```sh\r npx parcel index.html\r ```",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon server",
+    "client": "cd ../client && npm run dev",
+    "dev": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\"",
+    "build": "tsc",
+    "compile:watch": "tsc --watch",
+    "serve": "live-server",
+    "proxy": "node server.js"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "typescript": "^5.6.3",
+    "nodemon": "^3.1.4",
+    "concurrently": "^6.2.1",
+    "express": "^4.17.1",
+    "cors": "^2.8.5",
+    "http-proxy-middleware": "^2.0.1",
+    "dotenv": "^10.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+````
