@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon server",
-    "client": "cd ../client && npm run dev",
+    "client": "cd ./client && npm run dev",
     "dev": "concurrently --kill-others-on-fail \" npm run server\" \" npm run client\"",
     "build": "tsc",
     "compile:watch": "tsc --watch",

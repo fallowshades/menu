@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES6" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "target": "es2020" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
 
-    "module": "ES6" /* Specify what module code is generated. */,
+    "module": "es2020" /* Specify what module code is generated. */,
     "noEmitOnError": true /* Disable emitting files if any type checking errors are reported. */,
 
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
@@ -16,8 +16,20 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "noImplicitAny": true,
-
-    "lib": ["es2016", "dom"]
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+    "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+    "noEmit": true /* Disable emitting files from a compilation. */,
+    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
+    "allowImportingTsExtensions": true /* Allow imports to include TypeScript file extensions. Requires '--moduleResolution bundler' and either '--noEmit' or '--emitDeclarationOnly' to be set. */,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    /* "baseUrl": "./"  Specify the base directory to resolve non-relative module names. */
+    "moduleDetection": "force" /* Control what method is used to detect module-format JS files. */
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

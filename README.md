@@ -1,6 +1,20 @@
+#
+
+## start up
+
+- in client folder
+
 ```sh
 npx parcel index.html
 ```
+
+- in root folder
+
+```sh
+npm run dev
+```
+
+##
 
 - problemmatic
 
