@@ -4,7 +4,7 @@ const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
 // display all items when page loads
 
-const loader = async (): Promise<MenuItems[]> => {
+const loader = async (): Promise<MenuItemsResponse> => {
   const type = 'pizza'
   const API_URL = 'http://localhost:3000/api/menu'
   const API_KEY = 'fallow'
@@ -25,24 +25,37 @@ const loader = async (): Promise<MenuItems[]> => {
     }
 
     // Parse the response as JSON
-    const menu: MenuItems[] = await response.json()
+    const menu: MenuItemsResponse = await response.json()
     return menu // Return the parsed menu
   } catch (error) {
     console.error('Error fetching menu:', error) // Handle any errors
-    return [] // Return an empty array to fulfill the return type requirement
+    return { items: [] } // Return an empty array to fulfill the return type requirement
   }
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
+  diplayMenuItems(menu)
+  displayMenuButtons()
   const menuNew = await loader()
 
   console.log(menuNew)
-  diplayMenuItems(menu)
+  const transformedMenuNew = (menuNew as MenuItemsResponse).items.map(
+    (item) => ({
+      id: item.id,
+      title: item.name, // Renaming 'name' to 'title'
+      category: item.type, // Renaming 'type' to 'category'
+      price: item.price,
+      img: item.imgUrl, // Renaming 'imgUrl' to 'img'
+      desc:
+        item.description +
+        (item.toppings ? ' Toppings: ' + item.toppings.join(', ') : ''), // Combining description and optional toppings
+    })
+  )
+  diplayMenuItems(transformedMenuNew)
   displayMenuButtons()
 })
 
-interface MenuItems {
-  // Define the structure of MenuItem as per your API
+interface MenuItemRemote {
   id: number
   type: string
   name: string
@@ -52,6 +65,9 @@ interface MenuItems {
   toppings?: string[] // Optional property
 }
 
+interface MenuItemsResponse {
+  items: MenuItemRemote[] | []
+}
 export interface MenuItem {
   id: number
   title: string

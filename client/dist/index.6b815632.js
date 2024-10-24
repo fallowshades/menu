@@ -615,14 +615,26 @@ const loader = async ()=>{
     } catch (error) {
         console.error("Error fetching menu:", error) // Handle any errors
         ;
-        return [] // Return an empty array to fulfill the return type requirement
+        return {
+            items: []
+        } // Return an empty array to fulfill the return type requirement
         ;
     }
 };
 window.addEventListener("DOMContentLoaded", async function() {
+    diplayMenuItems((0, _dataDefault.default));
+    displayMenuButtons();
     const menuNew = await loader();
     console.log(menuNew);
-    diplayMenuItems((0, _dataDefault.default));
+    const transformedMenuNew = menuNew.items.map((item)=>({
+            id: item.id,
+            title: item.name,
+            category: item.type,
+            price: item.price,
+            img: item.imgUrl,
+            desc: item.description + (item.toppings ? " Toppings: " + item.toppings.join(", ") : "")
+        }));
+    diplayMenuItems(transformedMenuNew);
     displayMenuButtons();
 });
 function diplayMenuItems(menuItems) {

@@ -228,3 +228,55 @@ package.json
   "license": "ISC"
 }
 ````
+
+####
+
+app.ts
+
+- the array response is a mongoose query
+
+```ts
+const loader = async (): Promise<MenuItemsResponse> => {
+try{
+  ...
+      const menu: MenuItemsResponse = await response.json()
+    return menu // Return the parsed menu
+  } catch (error) {
+
+    return { items: [] } // Return an empty array to fulfill the return type requirement
+  }
+}
+```
+
+- use the same types
+
+```ts
+window.addEventListener('DOMContentLoaded', async function () {
+  diplayMenuItems(menu)
+  displayMenuButtons()
+  const menuNew = await loader()
+
+  console.log(menuNew)
+  const transformedMenuNew = (menuNew as MenuItemsResponse).items.map(
+    (item) => ({
+      id: item.id,
+      title: item.name, // Renaming 'name' to 'title'
+      category: item.type, // Renaming 'type' to 'category'
+      price: item.price,
+      img: item.imgUrl, // Renaming 'imgUrl' to 'img'
+      desc:
+        item.description +
+        (item.toppings ? ' Toppings: ' + item.toppings.join(', ') : ''), // Combining description and optional toppings
+    })
+  )
+  diplayMenuItems(transformedMenuNew)
+  displayMenuButtons()
+})
+
+interface MenuItemRemote {
+  ...
+  }
+interface MenuItemsResponse {
+  items: MenuItemRemote[] | []
+}
+```
