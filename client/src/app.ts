@@ -4,14 +4,13 @@ const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
 // display all items when page loads
 
-const loader = async (): Promise<MenuItemsResponse> => {
-  const type = 'pizza'
+const loader = async (type = ''): Promise<MenuItemsResponse> => {
   const API_URL = 'http://localhost:3000/api/menu'
   const API_KEY = 'fallow'
   try {
     console.log(`Fetching menu from ${API_URL}?type=${type}`)
     console.log(`Fetching menu from ${API_URL}?type=${type}`)
-    const response = await fetch(`${API_URL}?type=${type}`, {
+    const response = await fetch(`${API_URL}${type ? `?type=${type}` : ''}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -52,7 +51,7 @@ window.addEventListener('DOMContentLoaded', async function () {
     })
   )
   diplayMenuItems(transformedMenuNew)
-  displayMenuButtons()
+  displayMenuButtons(transformedMenuNew)
 })
 
 interface MenuItemRemote {
@@ -100,8 +99,10 @@ function diplayMenuItems(menuItems: MenuItem[]) {
 
   sectionCenter.innerHTML = displayMenu
 }
-function displayMenuButtons() {
-  const categories = menu.reduce<string[]>(
+async function displayMenuButtons(menuNew?: MenuItem[]) {
+  console.log(menu, menuNew)
+  //const categories = ['pizza', 'salad', 'drink', 'all']
+  const categories = (menuNew || menu).reduce<string[]>(
     function (values, item: MenuItem) {
       if (!values.includes(item.category)) {
         //lib: es2016
@@ -118,23 +119,38 @@ function displayMenuButtons() {
         </button>`
     })
     .join('')
-
+  //see className coupling
   btnContainer.innerHTML = categoryBtns
   const filterBtns = btnContainer.querySelectorAll('.filter-btn')
   console.log(filterBtns)
 
   filterBtns.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
+    btn.addEventListener('click', async function (e) {
       // console.log(e.currentTarget.dataset);
-      const category = (e.currentTarget as HTMLElement).dataset.id
-      const menuCategory = menu.filter(function (menuItem) {
-        // console.log(menuItem.category);
-        if (menuItem.category === category) {
-          return menuItem
-        }
-      })
+      const category = (
+        e.currentTarget as HTMLElement
+      ).dataset.id?.toLocaleLowerCase()
+      const menuCategory: MenuItem[] = await loader(category).then((response) =>
+        response.items.map((item: MenuItemRemote) => ({
+          id: item.id,
+          title: item.name, // Map 'name' to 'title'
+          category: item.type, // Map 'type' to 'category'
+          price: item.price,
+          img: item.imgUrl, // Map 'imgUrl' to 'img'
+          desc:
+            item.description +
+            (item.toppings ? ' Toppings: ' + item.toppings.join(', ') : ''), // Combine 'description' and optional toppings
+        }))
+      )
+      // const menuCategory = menu.filter(function (menuItem) {
+      //   // console.log(menuItem.category);
+      //   if (menuItem.category === category) {
+      //     return menuItem
+      //   }
+
       if (category === 'all') {
-        diplayMenuItems(menu)
+        const all = menu // menuNew || ----
+        diplayMenuItems(all)
       } else {
         diplayMenuItems(menuCategory)
       }
