@@ -373,3 +373,7 @@ Navbar
 .page .toggle-cart {
   color: var(--clr-grey-1);
 }
+
+footer {
+  display: flex;
+}

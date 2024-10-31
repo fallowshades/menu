@@ -1,4 +1,22 @@
 import menu from './data'
+function addEventListenerStoreOrder() {
+  const saveButtons = document.querySelectorAll('.save-btn')
+  saveButtons.forEach((button) => {
+    button.addEventListener('click', function (this: HTMLButtonElement) {
+      const itemData = JSON.parse(this.getAttribute('data-item') || '{}')
+      saveToLocalStorage(itemData)
+    })
+  })
+}
+
+// Function to save item to local storage
+function saveToLocalStorage(item: MenuItem | PersonalizedMenuItem) {
+  const currentItems = JSON.parse(localStorage.getItem('menuItems') || '[]')
+  currentItems.push(item)
+  localStorage.setItem('menuItems', JSON.stringify(currentItems))
+  alert(`${item.title} has been saved to local storage!`)
+}
+
 // get parent element
 const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
@@ -143,6 +161,9 @@ function diplayMenuItems(menuItems: MenuItem[] | PersonalizedMenuItem[]) {
           will it kill you?
           </a>
           </footer>
+           <button class="save-btn" data-item='${JSON.stringify(item)}'>
+              Save to Local Storage
+            </button>
         </article>`
     } else {
       // This block is executed if item is of type SimplifiedMenuItem
@@ -159,6 +180,9 @@ function diplayMenuItems(menuItems: MenuItem[] | PersonalizedMenuItem[]) {
           will it kill you?
           </a>
           </footer>
+           <button class="save-btn" data-item='${JSON.stringify(item)}'>
+              Save to Local Storage
+            </button>
         </article>`
     }
   })
@@ -166,6 +190,7 @@ function diplayMenuItems(menuItems: MenuItem[] | PersonalizedMenuItem[]) {
   // console.log(displayMenu);
 
   sectionCenter.innerHTML = displayMenu
+  addEventListenerStoreOrder() //need doM bc we already inserted it into DOM
 }
 async function displayMenuButtons(
   menuNew?: MenuItem[] | PersonalizedMenuItem[]
