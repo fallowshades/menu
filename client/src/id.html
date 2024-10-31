@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+      <div class="nav-center">
+        <!-- links -->
+        <div>
+          <button class="toggle-nav">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-links">
+            <li>
+              <a
+                href="index.html"
+                class="nav-link"
+              >
+                home
+              </a>
+            </li>
+            <li>
+              <a
+                href="menu.html"
+                class="nav-link"
+              >
+                products
+              </a>
+            </li>
+           
+        </div>
+        <!-- logo -->
+        <img
+          src="./images/logo-white.svg"
+          class="nav-logo"
+          alt="logo"
+        />
+        <!-- cart icon -->
+        <div class="toggle-container">
+          <button class="toggle-cart">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+          <span class="cart-item-count">1</span>
+        </div>
+      </div>
+    </nav>
+
+     <header>
+        <h2>{id}</h2>
+      </header>
+
+      <div>{adult}</div>
+      <footer>
+        <a
+          to=''
+          className='text-lg text-green-300'
+        >
+          back
+        </a>
+        <button
+          onClick={addToFavorites}
+          className='text-lg'
+        >
+          click to add to favorites
+        </button>
+      </footer>
+
+    
+</body>
+</html>

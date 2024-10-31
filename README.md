@@ -294,3 +294,17 @@ interface MenuItemsResponse {
   items: MenuItemRemote[] | []
 }
 ```
+
+### requirements
+
+#### alternativ
+
+Som _hungrig användare_ vill jag medan jag står i kö få en fin och tydlig överblick över vilka alternativ som finns i menyn på Slajs Pizza via min mobil, så jag snabbt kan bestämma mig och stilla min hunger.
+
+#### id
+
+Som _hungrig användare_ vill jag kunna klicka på ett menyalternativ för att kunna läsa lite mer om produkten och se om det ev. konmmer döda mig. Jag är nämligen allergisk mot vissa saker.
+
+#### cart
+
+Som _hungrig användare_ vill jag via mobilsidan kunna lägga min beställning innan jag kommer till pizzerian.
