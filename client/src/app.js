@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function () {
 function diplayMenuItems(menuItems) {
   let displayMenu = menuItems.map(function (item) {
     // console.log(item);
-    console.log(typeof item)
+    console.log('menu', typeof item)
     return `<article class="menu-item">
           <img src=${item.img} alt=${item.title} class="photo" />
           <div class="item-info">
@@ -24,6 +24,7 @@ function diplayMenuItems(menuItems) {
               ${item.desc}
             </p>
           </div>
+        
         </article>`
   })
   displayMenu = displayMenu.join('')

@@ -4,7 +4,7 @@ const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
 // display all items when page loads
 
-const loader = async (type = ''): Promise<MenuItemsResponse> => {
+const loader = async <T>(type = ''): Promise<T> => {
   const API_URL = 'http://localhost:3000/api/menu'
   const API_KEY = 'fallow'
   try {
@@ -24,18 +24,19 @@ const loader = async (type = ''): Promise<MenuItemsResponse> => {
     }
 
     // Parse the response as JSON
-    const menu: MenuItemsResponse = await response.json()
-    return menu // Return the parsed menu
+    const menu = await response.json()
+    return menu as T // Return the parsed menu
   } catch (error) {
     console.error('Error fetching menu:', error) // Handle any errors
-    return { items: [] } // Return an empty array to fulfill the return type requirement
+    throw error
+    //return { items: [] } // Return an empty array to fulfill the return type requirement
   }
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
   diplayMenuItems(menu)
   displayMenuButtons()
-  const menuNew = await loader()
+  const menuNew = await loader<MenuItemsResponse>() //'pizza'
 
   console.log(menuNew)
   const transformedMenuNew = (menuNew as MenuItemsResponse).items.map(
@@ -67,6 +68,7 @@ interface MenuItemRemote {
 interface MenuItemsResponse {
   items: MenuItemRemote[] | []
 }
+//
 export interface MenuItem {
   id: number
   title: string
@@ -92,6 +94,10 @@ function diplayMenuItems(menuItems: MenuItem[]) {
               ${item.desc}
             </p>
           </div>
+            <footer>
+          <a href="${item.id}">
+          </a>
+          </footer>
         </article>`
   })
   displayMenu = displayMenu.join('') //is a string here
