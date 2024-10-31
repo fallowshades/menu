@@ -4,7 +4,7 @@ const sectionCenter = document.querySelector('.section-center') as HTMLElement
 const btnContainer = document.querySelector('.btn-container') as HTMLElement
 // display all items when page loads
 
-const loader = async <T>(type = ''): Promise<T> => {
+const loader = async <T extends ApiResponse>(type = ''): Promise<T> => {
   const API_URL = 'http://localhost:3000/api/menu'
   const API_KEY = 'fallow'
   try {
@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
   console.log(menuNew)
   const transformedMenuNew = (menuNew as MenuItemsResponse).items.map(
-    (item) => ({
+    (item): Partial<MenuItem> => ({
       id: item.id,
       title: item.name, // Renaming 'name' to 'title'
       category: item.type, // Renaming 'type' to 'category'
@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', async function () {
         item.description +
         (item.toppings ? ' Toppings: ' + item.toppings.join(', ') : ''), // Combining description and optional toppings
     })
-  )
+  ) as MenuItem[]
   diplayMenuItems(transformedMenuNew)
   displayMenuButtons(transformedMenuNew)
 })
@@ -64,10 +64,11 @@ interface MenuItemRemote {
   price: number
   toppings?: string[] // Optional property
 }
-
-interface MenuItemsResponse {
-  items: MenuItemRemote[] | []
-}
+type ApiResponse = Record<string, any>
+type MenuItemsResponse = Record<'items', MenuItemRemote[] | []> //all mongodb responses
+// interface MenuItemsResponse {
+//   items: MenuItemRemote[] | []
+// }
 //
 export interface MenuItem {
   id: number
@@ -95,7 +96,8 @@ function diplayMenuItems(menuItems: MenuItem[]) {
             </p>
           </div>
             <footer>
-          <a href="${item.id}">
+          <a href="index.html/${item.id}">
+          will it kill you?
           </a>
           </footer>
         </article>`
@@ -136,17 +138,21 @@ async function displayMenuButtons(menuNew?: MenuItem[]) {
       const category = (
         e.currentTarget as HTMLElement
       ).dataset.id?.toLocaleLowerCase()
-      const menuCategory: MenuItem[] = await loader(category).then((response) =>
-        response.items.map((item: MenuItemRemote) => ({
-          id: item.id,
-          title: item.name, // Map 'name' to 'title'
-          category: item.type, // Map 'type' to 'category'
-          price: item.price,
-          img: item.imgUrl, // Map 'imgUrl' to 'img'
-          desc:
-            item.description +
-            (item.toppings ? ' Toppings: ' + item.toppings.join(', ') : ''), // Combine 'description' and optional toppings
-        }))
+
+      const menuCategory: MenuItem[] = await loader(category).then(
+        (response) => {
+          const typedResponse = response as MenuItemsResponse
+          return typedResponse.items.map((item: MenuItemRemote) => ({
+            id: item.id,
+            title: item.name, // Map 'name' to 'title'
+            category: item.type, // Map 'type' to 'category'
+            price: item.price,
+            img: item.imgUrl, // Map 'imgUrl' to 'img'
+            desc:
+              item.description +
+              (item.toppings ? ' Toppings: ' + item.toppings.join(', ') : ''), // Combine 'description' and optional toppings
+          }))
+        }
       )
       // const menuCategory = menu.filter(function (menuItem) {
       //   // console.log(menuItem.category);
