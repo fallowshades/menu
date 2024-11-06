@@ -3,7 +3,7 @@
 Fonts
 ===============
 */
-@import url("https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap');
 
 /*
 =============== 
@@ -44,8 +44,8 @@ Variables
   --clr-green-light: hsl(125, 71%, 66%);
   --clr-gold: #c59d5f;
   --clr-black: #222;
-  --ff-primary: "Roboto", sans-serif;
-  --ff-secondary: "Open Sans", sans-serif;
+  --ff-primary: 'Roboto', sans-serif;
+  --ff-secondary: 'Open Sans', sans-serif;
   --transition: all 0.3s linear;
   --spacing: 0.25rem;
   --radius: 0.5rem;
@@ -261,4 +261,119 @@ Menu
   .photo {
     height: 150px;
   }
+}
+
+/*
+=============== 
+Navbar
+===============
+*/
+
+.navbar {
+  height: 6rem;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-center {
+  width: 90vw;
+  max-width: var(--max-width);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-links {
+  display: none;
+}
+.toggle-nav {
+  background: var(--clr-primary-5);
+  border-color: transparent;
+  color: var(--clr-white);
+  width: 3.75rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.toggle-nav:hover {
+  background: var(--clr-primary-3);
+}
+.toggle-container {
+  position: relative;
+  margin-top: 0.75rem;
+}
+.toggle-cart {
+  background: transparent;
+  border-color: transparent;
+  font-size: 1.6rem;
+  color: var(--clr-white);
+  cursor: pointer;
+}
+.cart-item-count {
+  position: absolute;
+  top: -0.85rem;
+  right: -0.85rem;
+  background: var(--clr-primary-5);
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--clr-white);
+  font-weight: bold;
+  font-size: 1rem;
+}
+@media screen and (min-width: 800px) {
+  .nav-center {
+    position: relative;
+  }
+  .nav-logo {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    transform: translate(-50%, -50%);
+  }
+  .toggle-nav {
+    display: none;
+  }
+  .nav-links {
+    display: flex;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+  }
+  .nav-link {
+    color: var(--clr-white);
+    margin-right: 3rem;
+    letter-spacing: var(--spacing);
+    transition: var(--transition);
+    font-size: 1.25rem;
+  }
+  .nav-link:hover {
+    color: var(--clr-primary-5);
+  }
+}
+@media screen and (min-width: 992px) {
+  .nav-logo {
+    left: 50%;
+  }
+}
+/* page navbar */
+.page .nav-link {
+  color: var(--clr-grey-1);
+}
+.page .nav-link:hover {
+  color: var(--clr-primary-5);
+}
+.page .toggle-cart {
+  color: var(--clr-grey-1);
+}
+
+footer {
+  display: flex;
 }

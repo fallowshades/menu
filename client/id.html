@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <!-- styles -->
+    <link
+      rel="stylesheet"
+      href="./src/styles.css"
+    />
+</head>
+<body>
+    <nav class="navbar">
+      <div class="nav-center">
+        <!-- links -->
+        <div>
+          <button class="toggle-nav">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-links">
+            <li>
+              <a
+                href="index.html"
+                class="nav-link"
+              >
+                home
+              </a>
+            </li>
+            <li>
+              <a
+                href="menu.html"
+                class="nav-link"
+              >
+                products
+              </a>
+            </li>
+           
+        </div>
+     
+        <!-- cart icon -->
+        <div class="toggle-container">
+          <button class="toggle-cart">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+          <span class="cart-item-count">1</span>
+        </div>
+      </div>
+    </nav>
+  <!-- hero -->
+    <section class="page-hero">
+      <div class="section-center">
+        <h3 class="page-hero-title">Home / Single Product</h3>
+      </div>
+    </section>
+    <!-- sidebar -->
+     <header>
+        <h2>{id}</h2>
+      </header>
+
+      <div>{adult}</div>
+      <footer>
+        <a
+          to=''
+          className='text-lg text-green-300'
+        >
+          back
+        </a>
+        <button
+          onClick={addToFavorites}
+          className='text-lg'
+        >
+          click to add to favorites
+        </button>
+      </footer>
+
+      <script type="module" src="./src/pages/id.ts"></script>
+</body>
+</html>
